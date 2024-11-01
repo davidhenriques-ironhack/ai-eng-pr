@@ -13,7 +13,7 @@
 	- `data\elmundo_chunked_es_40years`: 40 years of data, chunked by page, in spanish: removes the need for a chunking strategy
 	- `data\elmundo_chunked_es_page1_40years`: 40 years of data, head page of the newspaper, in spanish: significantly smaller dataset if size is an issue. Can be made smaller by reducing the number of years
 	- `data\elmundo_chunked_es_page1_15years`: significantly shorter dataset and pre-chunked. A more modest challenge focusing more on RAG mechanics than the morose details of chunking and data preparation.
-	- `data\elmundo_chunked_en_page1_15years`: same dataset as before but translated to english. Removes the need to use a multilingual model and distills the required actions to core retrieval.
+	- `data\elmundo_chunked_en_page1_15years`: same dataset as before but translated to english. Removes the need to use a multilingual model and distills the required actions to core retrieval. Notice that if you choose this option, the wording on the section regarding RAG needs to be updated to remove referencies to multilingualism.
 
 ---
 
@@ -94,8 +94,8 @@ The historic articles for El Mundo contain a wealth of information that may help
 
 Devise an appropriate chunking strategy and create an appropriate RAG system that retrieves relevant documents to answer user queries and relate past events to user interests.
 
-Notice that the documents are in Spanish, which means that you will have to:
-- translate the documents
+Notice that the documents are in Spanish, which means that you will have to either:
+- translate the documents OR
 - use a multilingual system for your embeddings and retrieval (you can use a pre-trained model).
 
 <details>
@@ -169,6 +169,28 @@ You should select a tone of voice for your chatbot and fine-tune it to its inten
 
 1. Utilize a powerful LLM, such as the latest models from Anthropic, OpenAI, Google, or Meta, to generate sample interactions that follow your preferred tone of voice. You can include few-shot examples during this generation. Also, make sure to include examples of interactions where the bot refuses to respond or re-steers the conversation back to its intended loop.
 2. use the sample interactions generated in 1. to tune a smaller LLM for these specific tasks. You can use full fine tuning, LoRA, or any other technique to make your weaker model more specialized.
+
+---
+
+## Evaluation process
+
+
+You must evaluate your system. 
+Below - in ascending order of complexity - are some evaluation options. You must complete at least do step 1.
+
+1. Evaluate your system qualitatively - test your system thoroughly and frequently. Log and discuss your findings.
+
+2. Create pairs of Questions-Answers that you consider the ground truth. A way to do this can be leveraging on an LLM application (ChatGPT, Claude, etc) to create 30 to 50 correct answers. After, consider using a metrics like [ROUGE](https://en.wikipedia.org/wiki/ROUGE_(metric)) to identify if your generated answer matches the correct answer
+
+3. *LLM-as-a-Judge*: the concept of using *LLM-as-a-Judge* is to have **another** LLM evaluating if the generated answer was correct, based on:
+
+ 	- The user's question/input
+
+	- The generated answer
+
+	- The available information (documents, websources, etc)
+
+This *LLM-as-a-Judge* should evaluate each answer with a quantitative score.
 
 ---
 
